@@ -1,16 +1,29 @@
-# notes_app
+# 📒 Notes App
 
-A new Flutter project.
+A simple Flutter-based notes application. This app will allow users to create, store, and manage notes.  
+(Currently in development — stay tuned!)
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✅ Day 1 Progress
 
-A few resources to get you started if this is your first Flutter project:
+- 🎯 Flutter project created.
+- 🖼️ Basic UI layout completed:
+   - `AppBar` with title: **Notes App**
+   - `FloatingActionButton` for "Add Note"
+   - `ListView` for listing notes (empty for now).
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🚀 Next Goal (Day 2)
+
+- Create **Note Model**.
+- Add logic to create and display simple notes (temporary storage).
+
+---
+
+## 💻 Tech Stack
+
+- Flutter (Dart)
+- Will integrate Firebase later for cloud storage.
+
