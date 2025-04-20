@@ -34,12 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body:
         ListView(
-          children: [
-            Container(
-              height: 150,
-              width: 300,
-            )
-          ],
+          children: [],
         ),
       floatingActionButton: FloatingActionButton(onPressed: () {  },child: Icon(Icons.add),),
     );
