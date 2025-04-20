@@ -42,6 +42,7 @@ No copy-paste from tutorials — just raw dev grind. 💪
 "Day 1: Already reached Day 3 goals. Real progress isn't scheduled, it's earned."
 
 "Day 4: Yet to begin"
+
 ---
 ## 💻 Tech Stack
 
