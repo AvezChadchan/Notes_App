@@ -39,13 +39,13 @@ No copy-paste from tutorials — just raw dev grind. 💪
   
 ✅ Day 4:
 
-Local DB with SQLite added 🧠💾"
+Local DB with SQLite added only insert and select
 
 ---
 # 💥 Developer Note
 "Day 1: Already reached Day 3 goals. Real progress isn't scheduled, it's earned."
 
-"Day 4: Yet to begin"
+"Day 4: Local DB with SQLite added 🧠💾"
 
 ---
 ## 💻 Tech Stack
