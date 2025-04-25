@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'note.dart';
+import 'package:notes_app/data/local/db_helper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +24,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Note> notes = [];
+  DBHelper? dbRef;
+  List<Map<String, dynamic>> notes = [];
+  @override
+  void initState() {
+    super.initState();
+    dbRef = DBHelper.getInstance;
+    getNotes();
+  }
+
+  void getNotes() async {
+    notes = await dbRef!.getAllNotes();
+    print("Fetched Notes: $notes");
+    setState(() {});
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,45 +55,64 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         backgroundColor: Colors.black,
       ),
-      body: Container(
-        color: Colors.black,
-        child: ListView.builder(
-          itemCount: notes.length,
-          itemBuilder: (context, index) {
-            return Card(
-              margin: EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-              shadowColor: Colors.white,
-              color: Colors.orange,
-              elevation: 5,
-              child: ListTile(
-                title: Text(
-                  notes[index].title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 30,
-                  ),
-                ),
-                subtitle: Text(
-                  notes[index].content,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                trailing: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      notes.removeAt(index);
-                    });
+      body:
+          notes.isNotEmpty
+              ? Container(
+                color: Colors.black,
+                child: ListView.builder(
+                  itemCount: notes.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 8),
+                      shadowColor: Colors.white,
+                      color: Colors.orange,
+                      elevation: 5,
+                      child: ListTile(
+                        title: Text(
+                          notes[index][DBHelper.COLUMN_TITLE],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize: 30,
+                          ),
+                        ),
+                        subtitle: Text(
+                          notes[index][DBHelper.COLUMN_CONTENT],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        trailing: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              notes.removeAt(index);
+                            });
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Color(0xFFE53935),
+                            size: 27,
+                          ),
+                        ),
+                      ),
+                    );
                   },
-                  icon: Icon(Icons.delete, color: Color(0xFFE53935), size: 27),
+                ),
+              )
+              : Container(
+                color: Colors.black,
+                child: Center(
+                  child: Text(
+                    "No Notes Available!",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-            );
-          },
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () {
@@ -143,30 +175,31 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           actions: [
+            // TextButton(
+            //   onPressed: () {
+            //     Navigator.pop(context);
+            //   },
+            //   child: Text(
+            //     "Cancle",
+            //     style: TextStyle(
+            //       fontWeight: FontWeight.bold,
+            //       fontSize: 20,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                var title = titleController.text;
+                var content = contentController.text;
+                bool check = await dbRef!.addNote(
+                mtitle: title,
+                mcontent: content,
+                );
+                if (check) {
+                  getNotes();
+                }
                 Navigator.pop(context);
-              },
-              child: Text(
-                "Cancle",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  notes.add(
-                    Note(
-                      title: titleController.text,
-                      content: contentController.text,
-                    ),
-                  );
-                  Navigator.pop(context);
-                });
               },
               child: Text(
                 "Add",
