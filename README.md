@@ -36,6 +36,10 @@ No copy-paste from tutorials — just raw dev grind. 💪
 - Delete functionality implemented.
 
 - Card-based design & empty state handling.
+  
+✅ Day 4:
+
+Local DB with SQLite added 🧠💾"
 
 ---
 # 💥 Developer Note
