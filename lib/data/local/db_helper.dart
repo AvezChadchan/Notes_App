@@ -52,12 +52,12 @@ class DBHelper {
     List<Map<String, dynamic>> notes = await db.query(TABLE_NAME);
     return notes;
   }
-  Future<void> deleteNote({required var id}) async {
-    var db = await getDB();
-    await db.delete(
-      TABLE_NAME,
-      where: "$COLUMN_ID = ?",
-      whereArgs: [id],
-    );
-  }
+  // Future<void> deleteNote({required var id}) async {
+  //   var db = await getDB();
+  //   await db.delete(
+  //     TABLE_NAME,
+  //     where: "$COLUMN_ID = ?",
+  //     whereArgs: [id],
+  //   );
+  // }
 }

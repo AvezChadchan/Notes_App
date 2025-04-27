@@ -85,8 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         trailing: IconButton(
                           onPressed: () async{
-                            int noteID= notes[index][DBHelper.COLUMN_ID];
-                            await dbRef!.deleteNote(id: noteID);
+                            // int noteID= notes[index][DBHelper.COLUMN_ID];
+                            // await dbRef!.deleteNote(id: noteID);
                             setState(() {
                               getNotes();
                               notes.removeAt(index);
@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                        color: Color(0xFFFF3D00),
+                        color: Colors.orange.shade400,
                         width: 3,
                       ),
                       borderRadius: BorderRadius.circular(15),
