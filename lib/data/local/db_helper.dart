@@ -60,4 +60,7 @@ class DBHelper {
       whereArgs: [id],
     );
   }
+  void updateNote({required String title, required String content}){
+
+  }
 }
