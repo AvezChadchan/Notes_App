@@ -163,7 +163,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: titleController,
                   decoration: InputDecoration(
                     labelText: "Title",
-                    labelStyle: TextStyle(color: Colors.black, fontSize: 21),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.circular(15),
@@ -180,7 +184,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: contentController,
                   decoration: InputDecoration(
                     labelText: "Content",
-                    labelStyle: TextStyle(color: Colors.black, fontSize: 21),
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.circular(15),
@@ -197,6 +205,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                          ),
                           foregroundColor: Colors.orange,
                           backgroundColor: Colors.black,
                           textStyle: TextStyle(
@@ -214,6 +225,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Expanded(
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                          ),
                           foregroundColor: Colors.orange,
                           backgroundColor: Colors.black,
                           textStyle: TextStyle(
@@ -224,12 +238,30 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () async {
                           var title = titleController.text;
                           var content = contentController.text;
-                          bool check = await dbRef!.addNote(
-                            mtitle: title,
-                            mcontent: content,
-                          );
-                          if (check) {
-                            getNotes();
+                          if (title.isNotEmpty && content.isNotEmpty) {
+                            bool check = await dbRef!.addNote(
+                              mtitle: title,
+                              mcontent: content,
+                            );
+                            if (check) {
+                              getNotes();
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.black,
+                                content: Center(
+                                  child: Text(
+                                    "Please fill all the fields!!!",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
                           }
                           Navigator.pop(context);
                         },
