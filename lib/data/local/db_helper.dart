@@ -8,7 +8,7 @@ class DBHelper {
   static DBHelper getInstance = DBHelper._();
 
   static final String TABLE_NAME = "notes";
-  static final String COLUMN_ID = "id";
+  static var COLUMN_ID = "id";
   static final String COLUMN_TITLE = "title";
   static final String COLUMN_CONTENT = "content";
 
@@ -29,6 +29,7 @@ class DBHelper {
           "CREATE TABLE $TABLE_NAME($COLUMN_ID INTEGER PRIMARY KEY AUTOINCREMENT,$COLUMN_TITLE TEXT,$COLUMN_CONTENT TEXT)",
         );
       },
+      version: 1,
     );
   }
 
@@ -46,10 +47,17 @@ class DBHelper {
     return rowsEffected > 0;
   }
 
-
   Future<List<Map<String, dynamic>>> getAllNotes() async {
     var db = await getDB();
     List<Map<String, dynamic>> notes = await db.query(TABLE_NAME);
     return notes;
+  }
+  Future<void> deleteNote({required var id}) async {
+    var db = await getDB();
+    await db.delete(
+      TABLE_NAME,
+      where: "$COLUMN_ID = ?",
+      whereArgs: [id],
+    );
   }
 }

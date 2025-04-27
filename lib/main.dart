@@ -84,8 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         trailing: IconButton(
-                          onPressed: () {
+                          onPressed: () async{
+                            int noteID= notes[index][DBHelper.COLUMN_ID];
+                            await dbRef!.deleteNote(id: noteID);
                             setState(() {
+                              getNotes();
                               notes.removeAt(index);
                             });
                           },
@@ -175,19 +178,19 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           actions: [
-            // TextButton(
-            //   onPressed: () {
-            //     Navigator.pop(context);
-            //   },
-            //   child: Text(
-            //     "Cancle",
-            //     style: TextStyle(
-            //       fontWeight: FontWeight.bold,
-            //       fontSize: 20,
-            //       color: Colors.black,
-            //     ),
-            //   ),
-            // ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                "Cancle",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
+            ),
             TextButton(
               onPressed: () async {
                 var title = titleController.text;
