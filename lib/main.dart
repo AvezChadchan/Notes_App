@@ -61,40 +61,45 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView.builder(
                   itemCount: notes.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      margin: EdgeInsets.symmetric(horizontal: 13, vertical: 8),
-                      shadowColor: Colors.white,
-                      color: Colors.orange,
-                      elevation: 5,
-                      child: ListTile(
-                        title: Text(
-                          notes[index][DBHelper.COLUMN_TITLE],
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 30,
-                          ),
+                    return Expanded(
+                      child: Card(
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 13,
+                          vertical: 8,
                         ),
-                        subtitle: Text(
-                          notes[index][DBHelper.COLUMN_CONTENT],
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                        shadowColor: Colors.orangeAccent,
+                        color: Colors.orange,
+                        elevation: 7,
+                        child: ListTile(
+                          title: Text(
+                            notes[index][DBHelper.COLUMN_TITLE],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 30,
+                            ),
                           ),
-                        ),
-                        trailing: IconButton(
-                          onPressed: () async {
-                            int noteID = notes[index][DBHelper.COLUMN_ID];
-                            await dbRef!.deleteNote(id: noteID);
-                            setState(() {
-                              getNotes();
-                              notes.removeAt(index);
-                            });
-                          },
-                          icon: Icon(
-                            Icons.delete,
-                            color: Color(0xFFE53935),
-                            size: 27,
+                          subtitle: Text(
+                            notes[index][DBHelper.COLUMN_CONTENT],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () async {
+                              int noteID = notes[index][DBHelper.COLUMN_ID];
+                              await dbRef!.deleteNote(id: noteID);
+                              setState(() {
+                                getNotes();
+                                notes.removeAt(index);
+                              });
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Color(0xFFE53935),
+                              size: 27,
+                            ),
                           ),
                         ),
                       ),
@@ -118,24 +123,42 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
         onPressed: () {
-          _showAddNoteDialog();
+          _showModalBottomSheet();
         },
         child: Icon(Icons.add, size: 37, color: Colors.black),
       ),
     );
   }
 
-  void _showAddNoteDialog() {
+  void _showModalBottomSheet() {
     TextEditingController titleController = TextEditingController();
     TextEditingController contentController = TextEditingController();
-    showDialog(
+    showModalBottomSheet(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.orange,
-          content: SingleChildScrollView(
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
+          ),
+          height: 450,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
             child: Column(
               children: [
+                Text(
+                  "Add Note",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(height: 25),
                 TextField(
                   controller: titleController,
                   decoration: InputDecoration(
@@ -153,6 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SizedBox(height: 15),
                 TextField(
+                  maxLines: 4,
                   controller: contentController,
                   decoration: InputDecoration(
                     labelText: "Content",
@@ -167,46 +191,56 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.orange,
+                          backgroundColor: Colors.black,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancel"),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: Colors.orange,
+                          backgroundColor: Colors.black,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          ),
+                        ),
+                        onPressed: () async {
+                          var title = titleController.text;
+                          var content = contentController.text;
+                          bool check = await dbRef!.addNote(
+                            mtitle: title,
+                            mcontent: content,
+                          );
+                          if (check) {
+                            getNotes();
+                          }
+                          Navigator.pop(context);
+                        },
+                        child: Text("Add Note"),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Cancel",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-            TextButton(
-              onPressed: () async {
-                var title = titleController.text;
-                var content = contentController.text;
-                bool check = await dbRef!.addNote(
-                  mtitle: title,
-                  mcontent: content,
-                );
-                if (check) {
-                  getNotes();
-                }
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Add",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
         );
       },
     );
