@@ -85,8 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         trailing: IconButton(
                           onPressed: () async{
-                            // int noteID= notes[index][DBHelper.COLUMN_ID];
-                            // await dbRef!.deleteNote(id: noteID);
+                            int noteID= notes[index][DBHelper.COLUMN_ID];
+                            await dbRef!.deleteNote(id: noteID);
                             setState(() {
                               getNotes();
                               notes.removeAt(index);
