@@ -39,7 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         trailing: IconButton(
-                          onPressed: () async{
-                            int noteID= notes[index][DBHelper.COLUMN_ID];
+                          onPressed: () async {
+                            int noteID = notes[index][DBHelper.COLUMN_ID];
                             await dbRef!.deleteNote(id: noteID);
                             setState(() {
                               getNotes();
@@ -143,14 +142,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: "Title",
                     labelStyle: TextStyle(color: Colors.black, fontSize: 21),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 3),
+                      borderSide: BorderSide(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.orange.shade400,
-                        width: 3,
-                      ),
+                      borderSide: BorderSide(color: Colors.black, width: 3),
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
@@ -162,14 +158,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     labelText: "Content",
                     labelStyle: TextStyle(color: Colors.black, fontSize: 21),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black, width: 3),
+                      borderSide: BorderSide(color: Colors.black, width: 2),
                       borderRadius: BorderRadius.circular(15),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0xFFFF3D00),
-                        width: 3,
-                      ),
+                      borderSide: BorderSide(color: Colors.black, width: 3),
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
@@ -183,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.pop(context);
               },
               child: Text(
-                "Cancle",
+                "Cancel",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -196,8 +189,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 var title = titleController.text;
                 var content = contentController.text;
                 bool check = await dbRef!.addNote(
-                mtitle: title,
-                mcontent: content,
+                  mtitle: title,
+                  mcontent: content,
                 );
                 if (check) {
                   getNotes();
