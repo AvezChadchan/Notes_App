@@ -6,43 +6,63 @@ No copy-paste from tutorials — just raw dev grind. 💪
 
 ---
 # 💡 Features (so far)
-✍️ Create notes with a title & content.
+✍️ Create notes with a title & content
 
-🧾 Display notes in a modern card layout.
+🧾 Display notes in a modern card layout
 
-🗑️ Delete notes instantly.
+🗑️ Delete notes instantly
 
-💀 Friendly empty state when no notes exist.
+🔄 Edit notes (update functionality)
 
-🌑 Minimal & dark-themed design.
+💀 Friendly empty state when no notes exist
+
+🌑 Minimal & dark-themed design
+
+💾 Local database storage with SQLite
 
 ---
 # 📸 Preview
 
-![img.png](img.png)
+Select Operation:
+![img_4.png](img_4.png)
 
-![img_1.png](img_1.png)
+Add Operation:
+![img_2.png](img_2.png)
+
+Update Operation:
+![img_3.png](img_3.png)
 
 ---
 # 🗓️ Progress Log
 ✅ Day 1:
 
-- Project setup & UI layout.
+- Project setup & UI layout
 
-- Note creation logic added.
+- Note creation logic added
 
-- Dynamic ListView for displaying notes.
+- Dynamic ListView for displaying notes
 
-- Delete functionality implemented.
+- Delete functionality implemented
 
-- Card-based design & empty state handling.
-  
+- Card-based design & empty state handling
+
 ✅ Day 4:
 
-Local DB with SQLite added only insert and select
+- Local DB with SQLite implemented
+
+- Full CRUD operations (Create, Read, Update, Delete) working
+
+✅ Day 5:
+
+- Smooth input with showModalBottomSheet
+
+- Polished edit/update functionality
 
 ---
 # 💥 Developer Note
+
+"Started with a blank screen, ended up building experiences. No shortcuts, just real grind. 🚀"
+
 "Day 1: Already reached Day 3 goals. Real progress isn't scheduled, it's earned."
 
 "Day 4: Local DB with SQLite added 🧠💾"
@@ -52,5 +72,16 @@ Local DB with SQLite added only insert and select
 
 - Flutter (Dart)
 
-- Firebase planned for future cloud storage.
+- SQLite (sqflite package)
 
+- Path Provider (path package)
+
+- Will integrate Firebase later for cloud backup.
+
+---
+## ⚡ Coming Soon
+- 🔎 Live search functionality
+
+- ✨ Better animations and UX improvements
+
+- 🛡️ Cloud sync with Firebase

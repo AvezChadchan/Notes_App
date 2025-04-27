@@ -52,15 +52,29 @@ class DBHelper {
     List<Map<String, dynamic>> notes = await db.query(TABLE_NAME);
     return notes;
   }
-  Future<void> deleteNote({required var id}) async {
+
+  Future<bool> deleteNote({required int id}) async {
     var db = await getDB();
-    await db.delete(
+    int rowsEffected = await db.delete(
       TABLE_NAME,
       where: "$COLUMN_ID = ?",
       whereArgs: [id],
     );
+    print("Deleted rows: $rowsEffected");
+    return rowsEffected > 0;
   }
-  void updateNote({required String title, required String content}){
 
+  Future<bool> updateNote({
+    required int id,
+    required String mtitle,
+    required String mcontent,
+  }) async {
+    var db = await getDB();
+    int rowsEffected = await db.update(TABLE_NAME, {
+      COLUMN_TITLE: mtitle,
+      COLUMN_CONTENT: mcontent,
+    }, where: "$COLUMN_ID = $id");
+    print("Updated rows: $rowsEffected");
+    return rowsEffected > 0;
   }
 }
