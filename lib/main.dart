@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/data/local/db_helper.dart';
+import 'package:ZenNote/data/local/db_helper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -105,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   onTap: () {
                                     showModalBottomSheet(
                                       context: context,
+                                      isScrollControlled: true,
                                       builder: (context) {
                                         titleController.text =
                                             notes[index][DBHelper.COLUMN_TITLE];
@@ -169,6 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
+            isScrollControlled: true,
             builder: (context) {
               titleController.clear();
               contentController.clear();
@@ -182,142 +184,148 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _showModalBottomSheet({bool isUpdate = false, int id = 0}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.orange,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(25),
-          topRight: Radius.circular(25),
-        ),
-      ),
-      height: 450,
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          children: [
-            Text(
-              isUpdate ? "Update Note" : "Add Note",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
+    return Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
             ),
-            SizedBox(height: 25),
-            TextField(
-              controller: titleController,
-              decoration: InputDecoration(
-                labelText: "Title",
-                labelStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w700,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 3),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-            SizedBox(height: 15),
-            TextField(
-              maxLines: 4,
-              controller: contentController,
-              decoration: InputDecoration(
-                labelText: "Content",
-                labelStyle: TextStyle(
-                  color: Colors.black,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w700,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 2),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black, width: 3),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-            SizedBox(height: 15),
-            Row(
+          ),
+          height: 450,
+          width: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Expanded(
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(13),
-                      ),
-                      foregroundColor: Colors.orange,
-                      backgroundColor: Colors.black,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Text("Cancel"),
+                Text(
+                  isUpdate ? "Update Note" : "Add Note",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(13),
-                      ),
-                      foregroundColor: Colors.orange,
-                      backgroundColor: Colors.black,
-                      textStyle: TextStyle(color: Colors.white, fontSize: 18),
+                SizedBox(height: 25),
+                TextField(
+                  controller: titleController,
+                  decoration: InputDecoration(
+                    labelText: "Title",
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
                     ),
-                    onPressed: () async {
-                      var title = titleController.text;
-                      var content = contentController.text;
-                      if (title.isNotEmpty && content.isNotEmpty) {
-                        bool check =
-                            isUpdate
-                                ? await dbRef!.updateNote(
-                                  id: id,
-                                  mtitle: title,
-                                  mcontent: content,
-                                )
-                                : await dbRef!.addNote(
-                                  mtitle: title,
-                                  mcontent: content,
-                                );
-                        if (check) {
-                          getNotes();
-                        }
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: Colors.black,
-                            content: Center(
-                              child: Text(
-                                "Please fill all the fields!!!",
-                                style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 3),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+                TextField(
+                  maxLines: 4,
+                  controller: contentController,
+                  decoration: InputDecoration(
+                    labelText: "Content",
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 21,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 2),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black, width: 3),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          foregroundColor: Colors.orange,
+                          backgroundColor: Colors.black,
+                          textStyle: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("Cancel"),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(13),
+                          ),
+                          foregroundColor: Colors.orange,
+                          backgroundColor: Colors.black,
+                          textStyle: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                        onPressed: () async {
+                          var title = titleController.text;
+                          var content = contentController.text;
+                          if (title.isNotEmpty && content.isNotEmpty) {
+                            bool check =
+                                isUpdate
+                                    ? await dbRef!.updateNote(
+                                      id: id,
+                                      mtitle: title,
+                                      mcontent: content,
+                                    )
+                                    : await dbRef!.addNote(
+                                      mtitle: title,
+                                      mcontent: content,
+                                    );
+                            if (check) {
+                              getNotes();
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                backgroundColor: Colors.black,
+                                content: Center(
+                                  child: Text(
+                                    "Please fill all the fields!!!",
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                        );
-                      }
-                      Navigator.pop(context);
-                    },
-                    child: Text(isUpdate ? "Update" : "Add"),
-                  ),
+                            );
+                          }
+                          Navigator.pop(context);
+                        },
+                        child: Text(isUpdate ? "Update" : "Add"),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

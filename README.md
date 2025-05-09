@@ -1,4 +1,4 @@
-# 📒 Notes App
+# 📒 Zen Note
 
 A simple, dark-themed notes app built with Flutter.
 This app lets you create, display, and manage notes — clean, minimal, and fully custom-built from scratch.
@@ -66,6 +66,8 @@ Update Operation:
 "Day 1: Already reached Day 3 goals. Real progress isn't scheduled, it's earned."
 
 "Day 4: Local DB with SQLite added 🧠💾"
+
+"Day 5: Made the modal bottom sheet scrollable and added padding to prevent keyboard obstruction and adding somthing to the screen."
 
 ---
 ## 💻 Tech Stack
