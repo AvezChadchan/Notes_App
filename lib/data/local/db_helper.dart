@@ -42,7 +42,6 @@ class DBHelper {
       COLUMN_TITLE: mtitle,
       COLUMN_CONTENT: mcontent,
     });
-
     print("Inserted rows: $rowsEffected");
     return rowsEffected > 0;
   }
