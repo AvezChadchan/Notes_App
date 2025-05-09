@@ -24,12 +24,15 @@ No copy-paste from tutorials — just raw dev grind. 💪
 # 📸 Preview
 
 Select Operation:
+
 ![img_4.png](img_4.png)
 
 Add Operation:
+
 ![img_2.png](img_2.png)
 
 Update Operation:
+
 ![img_3.png](img_3.png)
 
 ---
