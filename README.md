@@ -90,3 +90,6 @@ Update Operation:
 - ✨ Better animations and UX improvements
 
 - 🛡️ Cloud sync with Firebase
+
+## 🤝 Contributing
+Feel free to fork the repository and submit a pull request. All contributions and improvements are welcome!
