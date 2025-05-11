@@ -195,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
               topRight: Radius.circular(25),
             ),
           ),
-          height: 450,
+          height: 900,
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(14.0),
@@ -232,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 SizedBox(height: 15),
                 TextField(
-                  maxLines: 4,
+                  maxLines: 10,
                   controller: contentController,
                   decoration: InputDecoration(
                     labelText: "Content",
